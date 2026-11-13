@@ -18,11 +18,13 @@ jobs:
           distribution: 'temurin'
           java-version: '17'
 
-      - name: Fix Gradle Wrapper & Build
-        run: |
-          gradle wrapper --gradle-version 7.5
-          chmod +x gradlew
-          ./gradlew assembleDebug --no-daemon
+      - name: Setup Gradle 7.5
+        uses: gradle/actions/setup-gradle@v3
+        with:
+          gradle-version: '7.5'
+
+      - name: Build Debug APK
+        run: ./gradlew assembleDebug --no-daemon
 
       - name: Upload APK Artifact
         uses: actions/upload-artifact@v4
